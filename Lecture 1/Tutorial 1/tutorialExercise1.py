@@ -10,6 +10,11 @@ encoding = 'utf-8'
 filename_read = os.path.join(path, "auto-mpg.csv")
 filename_write = os.path.join(path, "auto-mpg-norm.csv")
 
+
+"""
+# === Pandas statistics implementation ===
+
+
 c = 0
 
 with codecs.open(filename_read, "r", encoding) as fh:
@@ -74,6 +79,38 @@ with codecs.open(filename_read, "r", encoding) as fh:
     for key in sorted(fields.keys()):
         print(f"{key}:{fields[key]}")
 
+"""
+
+"""
+# === Key with enumeration ===
+
+# Read a CSV, symbolic headers
+import codecs
+import os
+import csv
+
+path = "."
+
+encoding = 'utf-8'
+filename = os.path.join(path, "auto-mpg.csv")
+
+c = 0
+
+with codecs.open(filename, "r", encoding) as fh:
+    reader = csv.reader(fh)
+
+    # Generate header index using comprehension.
+    # Comprehension is cool, but not necessarily a beginners feature of Python.
+    header_idx = {key: value for (value, key) in enumerate(next(reader))}
+
+    for row in reader:
+        c += 1
+        if c > 5:
+            break
+        print(f"Car Name: {row[header_idx['name']]}")
+
+"""
+
 
 
 """
@@ -113,17 +150,7 @@ with codecs.open(filename, "r", encoding) as fh:
 """
 
 
-"""
-# === Accessing Files directly ===
 
-col_horsepower = df['horsepower']
-col_name = df['name']
-col_cylinders = df['cylinders']
-result = pd.concat([col_name, col_horsepower, col_cylinders], axis=1)
-print(result)
-
-
-"""
 
 """
 # === Concatenating Rows and Columns ===
